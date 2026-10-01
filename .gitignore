@@ -1,0 +1,24 @@
+# Secrets and local settings
+.env
+backend/.env
+frontend/.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.venv-win/
+backend/.venv/
+backend/.venv-win/
+
+# Node / Vite
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+
+# IDE, logs, and local diagnostics
+.idea/
+*.log
+*-response.json
+app-vue-response.txt
