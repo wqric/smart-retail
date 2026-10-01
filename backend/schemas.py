@@ -12,8 +12,13 @@ class PartyDataSchema(BaseModel):
     name: str
     inn: str
     ogrn: str | None = None
+    kpp: str | None = None
+    legal_form: str | None = None
+    okved: str | None = None
+    manager_position: str | None = None
     director: str | None = None
     address: str | None = None
+    city: str | None = None
     registration_date: date | None = None
     authorized_capital: Decimal | None = None
     status: str | None = None
@@ -23,6 +28,21 @@ class PartyDataSchema(BaseModel):
 
 class PartyCheckRequest(BaseModel):
     inn: str = Field(pattern=r"^\d{10}(\d{2})?$")
+
+
+class PartySearchRequest(BaseModel):
+    query: str = Field(min_length=2, max_length=300)
+    count: int = Field(default=10, ge=1, le=20)
+
+
+class PartySearchResult(BaseModel):
+    name: str
+    inn: str | None = None
+    ogrn: str | None = None
+    director: str | None = None
+    city: str | None = None
+    address: str | None = None
+    status: str | None = None
 
 
 class EscrowCreateRequest(BaseModel):

@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from backend.config import get_party_provider, get_payment_provider, get_settings
 from backend.providers.base import BasePartyProvider, BasePaymentProvider
-from backend.schemas import EscrowCreateRequest, EscrowReleaseRequest, EscrowResponse, PartyCheckRequest, PartyDataSchema
+from backend.schemas import EscrowCreateRequest, EscrowReleaseRequest, EscrowResponse, PartyCheckRequest, PartyDataSchema, PartySearchRequest, PartySearchResult
 from backend.services.risk_analyzer import RiskAnalyzer
 
 settings = get_settings()
@@ -19,6 +19,11 @@ async def health():
 @app.post("/api/v1/party/check", response_model=PartyDataSchema)
 async def check_party(payload: PartyCheckRequest, provider: BasePartyProvider = Depends(get_party_provider)):
     return RiskAnalyzer().analyze(await provider.get_party_info(payload.inn))
+
+
+@app.post("/api/v1/party/search", response_model=list[PartySearchResult])
+async def search_parties(payload: PartySearchRequest, provider: BasePartyProvider = Depends(get_party_provider)):
+    return await provider.search_parties(payload.query, payload.count)
 
 
 @app.post("/api/v1/deals/create-escrow", response_model=EscrowResponse)

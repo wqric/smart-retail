@@ -1,7 +1,9 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
+const props = defineProps({ initial: { type: String, default: '' } })
 const emit = defineEmits(['found'])
-const inn = ref(''), loading = ref(false), error = ref('')
+const inn = ref(props.initial), loading = ref(false), error = ref('')
+watch(() => props.initial, value => { inn.value = value })
 const valid = computed(() => /^\d{10}(\d{2})?$/.test(inn.value))
 async function submit() { if (!valid.value) { error.value='Введите ИНН из 10 или 12 цифр'; return }; loading.value=true; error.value=''; try { const { partyApi } = await import('../services/api'); emit('found', await partyApi.check(inn.value)) } catch (e) { error.value=e.message } finally { loading.value=false } }
 </script>

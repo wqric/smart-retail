@@ -1,12 +1,16 @@
 from abc import ABC, abstractmethod
 
-from backend.schemas import EscrowResponse, PartyDataSchema
+from backend.schemas import EscrowResponse, PartyDataSchema, PartySearchResult
 
 
 class BasePartyProvider(ABC):
     @abstractmethod
     async def get_party_info(self, inn: str) -> PartyDataSchema:
         """Return verified counterparty data for an INN."""
+
+    @abstractmethod
+    async def search_parties(self, query: str, count: int = 10) -> list[PartySearchResult]:
+        """Search counterparties by a free-form query."""
 
 
 class BasePaymentProvider(ABC):
