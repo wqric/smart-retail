@@ -45,6 +45,21 @@ class PartySearchResult(BaseModel):
     status: str | None = None
 
 
+class RecentPartySchema(PartySearchResult):
+    checked_at: str
+
+
+class AiAnalysisRequest(BaseModel):
+    party: PartyDataSchema
+
+
+class AiAnalysisResponse(BaseModel):
+    summary: str
+    risk_focus: list[str] = Field(default_factory=list)
+    recommendations: list[str] = Field(default_factory=list)
+    disclaimer: str = "ИИ-анализ носит информационный характер и не заменяет юридическую или финансовую проверку."
+
+
 class EscrowCreateRequest(BaseModel):
     title: str = Field(min_length=2, max_length=160)
     description: str = Field(min_length=2, max_length=1000)

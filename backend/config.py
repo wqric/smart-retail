@@ -8,11 +8,20 @@ from backend.providers.payment import MockPaymentProvider, YookassaEscrowProvide
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=Path(__file__).resolve().parent.parent / ".env", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_file=(
+            Path(__file__).resolve().parent.parent / ".env",
+            Path(__file__).resolve().parent / ".env",
+        ),
+        extra="ignore",
+    )
     party_provider: str = "dadata"
     payment_provider: str = "mock"
     dadata_api_key: str = ""
     dadata_secret_key: str = ""
+    timeweb_ai_token: str = ""
+    timeweb_agent_access_id: str = ""
+    timeweb_ai_model: str = "gpt-4.1"
     cors_origins: str = "http://localhost:5173"
 
 

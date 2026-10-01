@@ -20,5 +20,6 @@ frontend/dist/
 # IDE, logs, and local diagnostics
 .idea/
 *.log
+*.db
 *-response.json
 app-vue-response.txt
